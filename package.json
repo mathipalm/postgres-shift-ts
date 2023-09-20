@@ -1,0 +1,36 @@
+{
+  "name": "postgres-shift-ts",
+  "version": "1.0.0",
+  "description": "A simple forwards only typescript migration solution for [postgres.js](https://github.com/porsager/postgres)",
+  "author": "Mathias Palm <mathias@codebypalm.com>",
+  "license": "WTFPL",
+  "repository": "porsager/postgres-shift",
+  "module": "index.ts",
+  "type": "module",
+  "files": [
+    "/index.ts"
+  ],
+  "keywords": [
+    "migration",
+    "driver",
+    "postgresql",
+    "postgres.js",
+    "postgres",
+    "postgre",
+    "client",
+    "sql",
+    "db",
+    "pg",
+    "database"
+  ],
+  
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "postgres": "^3.3.5"
+  }
+}
