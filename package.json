@@ -1,6 +1,6 @@
 {
   "name": "postgres-shift-ts",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple forwards only typescript migration solution for [postgres.js](https://github.com/porsager/postgres)",
   "author": "Mathias Palm <mathias@codebypalm.com>",
   "license": "WTFPL",

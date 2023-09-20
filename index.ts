@@ -81,10 +81,9 @@ export default async function ({
     `.then(([x]) => x)
   }
 
-  function ensureMigrationsTable() {
-    sql`create schema if not exists postgres;`
-    sql`
-        create schema if not exists postgres;
+  async function ensureMigrationsTable() {
+    await sql`create schema if not exists postgres;`
+    await sql`
         create table if not exists postgres.migrations (
           migration_id serial primary key,
           created_at timestamp with time zone not null default now(),
