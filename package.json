@@ -10,6 +10,9 @@
   "files": [
     "/index.ts"
   ],
+  "scripts": {
+    "test": "bun run tests/index.ts"
+  },
   "keywords": [
     "migration",
     "driver",
@@ -23,14 +26,15 @@
     "pg",
     "database"
   ],
-  
   "devDependencies": {
-    "bun-types": "latest"
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "bun-types": "latest",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "postgres": "^3.3.5"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "postgres": "^3.3.5"
   }
 }
