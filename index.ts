@@ -63,7 +63,7 @@ export default async function ({
       : await import(join(path, 'index.js')).then(x => x.default(sql)) // eslint-disable-line
 
     await sql`
-      insert into postgres.migrations (
+      insert into migrations (
         migration_id,
         name
       ) values (
@@ -75,20 +75,24 @@ export default async function ({
 
   function getCurrentMigration() {
     return sql`
-      select migration_id as id from postgres.migrations
+      select migration_id as id from migrations
       order by migration_id desc
       limit 1
     `.then(([x]) => x)
   }
 
-  async function ensureMigrationsTable() {
-    await sql`create schema if not exists postgres;`
-    await sql`
-        create table if not exists postgres.migrations (
-          migration_id serial primary key,
-          created_at timestamp with time zone not null default now(),
-          name text
-        )
-      `
+  function ensureMigrationsTable() {
+    return sql.unsafe(`
+      DO $$ 
+      BEGIN
+        IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'migrations') THEN
+          CREATE TABLE migrations (
+            migration_id serial primary key,
+            created_at timestamp with time zone not null default now(),
+            name text
+          );
+        END IF;
+      END $$;
+    `)
   }
 }

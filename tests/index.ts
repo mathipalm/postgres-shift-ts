@@ -2,7 +2,7 @@ import shift from '../index.js'
 import postgres from 'postgres'
 import { fileURLToPath } from 'url'
 
-const urlString = ''
+const urlString = 'postgres://gateway:gateway@localhost:5432/gateway'
 const url = new URL(urlString)
 const username = url.username
 const password = url.password
