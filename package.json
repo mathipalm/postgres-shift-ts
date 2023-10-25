@@ -1,6 +1,6 @@
 {
   "name": "postgres-shift-ts",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple forwards only typescript migration solution for [postgres.js](https://github.com/porsager/postgres)",
   "author": "Mathias Palm <mathias@codebypalm.com>",
   "license": "WTFPL",
@@ -8,10 +8,12 @@
   "module": "index.ts",
   "type": "module",
   "files": [
-    "/index.ts"
+    "/index.ts",
+    "/tests/*"
   ],
   "scripts": {
-    "test": "bun run tests/index.ts"
+    "test": "node dist/tests/index.js",
+    "build": "tsc --build && copyfiles tests/migrations/*.sql dist"
   },
   "keywords": [
     "migration",
@@ -27,12 +29,13 @@
     "database"
   ],
   "devDependencies": {
+    "@types/node": "^20.8.8",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "bun-types": "latest",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
-    "postgres": "^3.3.5"
+    "postgres": "^3.3.5",
+    "copyfiles": "^2.4.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

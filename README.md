@@ -1,15 +1,11 @@
-# postgres-shift-ts
+# `postgres-shift-ts`
 
-To install dependencies:
+A simple forwards only migration solution for [postgres.js](https://github.com/porsager/postgres).
 
-```bash
-bun install
-```
+`postgres-shift-ts`
 
-To run:
+## `shift()`
 
-```bash
-bun run index.ts
-```
+`postgres-shift-ts` exports a single function which is used to start migrations. It expects a [postgres.js sql]() database object to run migrations with.
 
-This project was created using `bun init` in bun v1.0.2. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+## `Example`

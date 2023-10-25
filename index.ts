@@ -12,20 +12,34 @@ export default async function ({
 }: {
   sql: Sql
   path?: string
-  before?: Function | null
-  after?: Function | null
+  before?:
+    | ((migration: {
+        path: string
+        migration_id: number
+        name: string
+      }) => void)
+    | null
+  after?:
+    | ((migration: {
+        path: string
+        migration_id: number
+        name: string
+      }) => void)
+    | null
 }) {
   const migrations = fs
     .readdirSync(path)
-    .filter(
-      x => fs.statSync(join(path, x)).isDirectory() && x.match(/^[0-9]{5}_/)
-    )
+    .filter(x => x.match(/^[0-9]+_.*\.sql$/))
     .sort()
-    .map(x => ({
-      path: join(path, x),
-      migration_id: parseInt(x.slice(0, 5)),
-      name: x.slice(6).replace(/-/g, ' ')
-    }))
+    .map(x => {
+      const match = x.match(/\d+/)
+      const migration_id = parseInt(match![0], 10)
+      return {
+        path: path,
+        migration_id,
+        name: x
+      }
+    })
 
   const latest = migrations[migrations.length - 1]
 
@@ -57,11 +71,7 @@ export default async function ({
       name
     }: { path: string; migration_id: number; name: string }
   ) {
-    fs.existsSync(join(path, 'index.sql')) &&
-    !fs.existsSync(join(path, 'index.js'))
-      ? await sql.file(join(path, 'index.sql'))
-      : await import(join(path, 'index.js')).then(x => x.default(sql)) // eslint-disable-line
-
+    await sql.file(join(path, name))
     await sql`
       insert into migrations (
         migration_id,
@@ -73,7 +83,7 @@ export default async function ({
     `
   }
 
-  function getCurrentMigration() {
+  async function getCurrentMigration() {
     return sql`
       select migration_id as id from migrations
       order by migration_id desc
